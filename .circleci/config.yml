@@ -16,7 +16,10 @@ jobs:
             - v1-dependencies-
       - attach_workspace:
           at: ./target
-      - run: |
+      - run:
+          |
+          sudo chmod +x ./mvnw
+          |
           ./mvnw \
           -Dtest=$(for file in $(circleci tests glob "src/test/**/**.java" \
           | circleci tests split --split-by=timings); \
