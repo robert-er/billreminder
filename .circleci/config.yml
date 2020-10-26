@@ -1,5 +1,11 @@
 version: 2.0
 
+deployment:
+  production:
+    branch: "main"
+    commands:
+      - sh ./deploy.sh
+
 jobs:
   test:
     parallelism: 2
