@@ -54,7 +54,7 @@ jobs:
       - run: |
           sudo chmod +x ./mvnw
           ./mvnw \
-          -Dtest=$(for file in $(circleci tests glob "src/test/java/com/billreminder/**/**.java" \
+          -Dtest=$(for file in $(circleci tests glob "src/test/java/com/billreminder/domain/**.java" \
           | circleci tests split --split-by=timings); \
           do basename $file \
           | sed -e "s/.java/,/"; \
@@ -71,15 +71,6 @@ jobs:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-      - image: circleci/mysql:8.0.4
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment:
-          MYSQL_ROOT_PASSWORD: rootpw
-          MYSQL_DATABASE: billreminder
-          MYSQL_USER: robert
-          MYSQL_PASSWORD: robertpassword
     steps:
       - checkout
       - restore_cache:
@@ -87,24 +78,7 @@ jobs:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
       - run:
-          # Our primary container isn't MYSQL so run a sleep command until it's ready.
-          name: Waiting for MySQL to be ready
-          command: |
-            for i in `seq 1 10`;
-            do
-            nc -z 127.0.0.1 3306 && echo Success && exit 0
-            echo -n .
-            sleep 1
-            done
-            echo Failed waiting for MySQL && exit 1
-            - run:
-                name: Install MySQL CLI; Import dummy data; run an example query
-                command: |
-                  sudo apt-get install default-mysql-client
-                  mysql -h 127.0.0.1 -u robert -robertpassword billreminder < sql-data/dummy.sql
-                  mysql -h 127.0.0.1 -u robert -robertpassword --execute="SELECT * FROM test_db.Persons"
-      - run:
-          name: Download Dependencies
+          name: Maven package
           command: |
             sudo chmod +x ./mvnw
             ./mvnw -Dmaven.test.skip=true package
