@@ -51,6 +51,15 @@ jobs:
           | sed -e "s/.java/,/"; \
           done | tr -d '\r\n') \
           -e test verify
+      - run: |
+          sudo chmod +x ./mvnw
+          ./mvnw \
+          -Dtest=$(for file in $(circleci tests glob "src/test/**/**/**.java" \
+          | circleci tests split --split-by=timings); \
+          do basename $file \
+          | sed -e "s/.java/,/"; \
+          done | tr -d '\r\n') \
+          -e test verify
       - store_test_results:
           path: target/surefire-reports
       - store_artifacts:
