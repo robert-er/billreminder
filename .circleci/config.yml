@@ -7,12 +7,12 @@ jobs:
       - image: circleci/openjdk:stretch
         auth:
           username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
 
           - image: circleci/mysql:8.0.4
           auth:
             username: mydockerhub-user
-            password: $DOCKERHUB_PASSWORD
+            password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
           environment:
             MYSQL_ROOT_PASSWORD: rootpw
             MYSQL_DATABASE: test_db
