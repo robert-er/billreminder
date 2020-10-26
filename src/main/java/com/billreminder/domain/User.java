@@ -1,17 +1,19 @@
 package com.billreminder.domain;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "surname", "email"}),
                             @UniqueConstraint(columnNames =  {"email"})})
-@Entity(name = "USERS")
+@Entity(name = "users")
 public class User {
 
     @Id
