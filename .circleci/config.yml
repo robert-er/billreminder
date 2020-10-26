@@ -12,11 +12,6 @@ jobs:
           auth:
             username: mydockerhub-user
             password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-          environment:
-            MYSQL_ROOT_PASSWORD: rootpw
-            MYSQL_DATABASE: test_db
-            MYSQL_USER: user
-            MYSQL_PASSWORD: passw0rd
     steps:
       - checkout
       - restore_cache:
