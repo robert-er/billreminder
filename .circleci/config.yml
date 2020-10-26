@@ -5,7 +5,6 @@ jobs:
     parallelism: 2
     docker:
       - image: circleci/openjdk:stretch
-        cmd: ["/bin/bash"]
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -42,7 +41,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
-      - run: ./mvnw -Dmaven.test.skip=true package
+      - run: sudo ./mvnw -Dmaven.test.skip=true package
       - save_cache:
           paths:
             - ~/.m2
