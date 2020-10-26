@@ -5,7 +5,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:11.0.8-jdk-stretch
+      - image: circleci/openjdk:11.0.3-jdk-stretch
         #specify system properties
         environment:
           DB_ROOT_USER: robert
