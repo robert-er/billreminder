@@ -42,15 +42,6 @@ jobs:
                   sudo apt-get install default-mysql-client
                   mysql -h 127.0.0.1 -u user -ppassw0rd test_db < sql-data/dummy.sql
                   mysql -h 127.0.0.1 -u user -ppassw0rd --execute="SELECT * FROM test_db.Persons"
-      - run: |
-          sudo chmod +x ./mvnw
-          ./mvnw \
-          -Dtest=$(for file in $(circleci tests glob "src/test/**/**.java" \
-          | circleci tests split --split-by=timings); \
-          do basename $file \
-          | sed -e "s/.java/,/"; \
-          done | tr -d '\r\n') \
-          -e test verify
       - store_test_results:
           path: target/surefire-reports
       - store_artifacts:
