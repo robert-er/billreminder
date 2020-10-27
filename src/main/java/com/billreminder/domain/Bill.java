@@ -24,6 +24,7 @@ public class Bill {
     private BigDecimal amount;
     private LocalDate paymentDate;
     private Status status;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="board_id")
     private Board board;

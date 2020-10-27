@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +26,10 @@ public class User {
     private String email;
     private String password;
     private LocalDateTime signUpDate;
+
+    @OneToMany(targetEntity = Board.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private List<Board> boards;
 }

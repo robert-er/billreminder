@@ -19,9 +19,14 @@ public class Board {
     private Long id;
     private int year;
     private int month;
+
     @OneToMany(targetEntity = Bill.class,
             mappedBy = "board",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Bill> bills;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="user_id")
+    private User user;
 }
