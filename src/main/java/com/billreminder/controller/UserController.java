@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping
     public Long createUser(@RequestBody UserDto userDto) {
-        return userService.addNewUser(userMapper.mapToUser(userDto)).getId();
+        return userService.addNewUser(userMapper.createUserFromUserDto(userDto)).getId();
     }
 
     @GetMapping
@@ -38,9 +38,9 @@ public class UserController {
         userService.deleteById(id);
     }
 
-    @PutMapping({"id"})
-    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
-        return userService.findById(id)
+    @PutMapping
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        return userService.findById(userDto.getId())
                 .map(u -> {
                     u.setName(userDto.getName());
                     u.setSurname(userDto.getSurname());

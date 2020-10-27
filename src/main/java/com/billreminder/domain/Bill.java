@@ -29,7 +29,7 @@ public class Bill {
     @JoinColumn(name="board_id")
     private Board board;
 
-    private enum Status {
+    public enum Status {
         PAID, UNPAID, OVERTIME
     }
 }
